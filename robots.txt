@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /sql/
+Sitemap: https://relpps.com.br/sitemap.xml
