@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relpps Cosméticos — Produtos para Unhas, Cílios e Sobrancelhas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="topo">
+    <a href="index.html" class="marca">
+        <img src="assets/img/logo.png" alt="Relpps Cosméticos" height="48">
+    </a>
+    <div class="topo-acoes">
+        <nav class="menu" id="menuPrincipal">
+            <a href="index.html">Início</a>
+            <a href="#">Catálogo</a>
+            <a href="#">Promoções</a>
+            <a href="#">Blog</a>
+            <a href="#">Sobre</a>
+            <a href="#">Contato</a>
+        </nav>
+        <a class="instagram-link" href="https://www.instagram.com/relpps" target="_blank" rel="noopener" aria-label="Instagram da Relpps">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg>
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuPrincipal">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+<script>
+(function () {
+    var botao = document.getElementById('menuToggle');
+    var menu = document.getElementById('menuPrincipal');
+    if (!botao || !menu) return;
+    botao.addEventListener('click', function () {
+        var aberto = menu.classList.toggle('aberto');
+        botao.classList.toggle('aberto', aberto);
+        botao.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    });
+    menu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            menu.classList.remove('aberto');
+            botao.classList.remove('aberto');
+            botao.setAttribute('aria-expanded', 'false');
+        });
+    });
+})();
+</script>
+<main>
+
+<section class="hero-scrolly" id="hero">
+    <div class="hero-scrolly-stage" id="heroStage">
+        <img class="hero-scrolly-frame" id="heroFrame" src="assets/img/hero/frame-001.jpg" alt="Cuidado profissional com beleza — Relpps Cosméticos">
+        <div class="hero-scrolly-overlay" aria-hidden="true"></div>
+
+        <div class="hero-scrolly-conteudo" id="heroConteudo">
+            <span class="eyebrow">Relpps Cosméticos</span>
+            <h1>Onde beleza encontra cuidado.</h1>
+            <p>Insumos com procedência garantida para unhas, cílios e sobrancelhas.</p>
+            <div class="botoes">
+                <a class="botao" href="#">Ver catálogo</a>
+                <a class="botao-secundario" href="https://wa.me/5561996498557?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Relpps%20Cosm%C3%A9ticos." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="hero-categorias" id="heroCategorias" aria-hidden="true">
+            <span class="hero-categoria-palavra" data-inicio="0.14" data-fim="0.38"><span style="transition-delay:0ms">U</span><span style="transition-delay:35ms">n</span><span style="transition-delay:70ms">h</span><span style="transition-delay:105ms">a</span><span style="transition-delay:140ms">s</span></span>
+            <span class="hero-categoria-palavra" data-inicio="0.42" data-fim="0.66"><span style="transition-delay:0ms">C</span><span style="transition-delay:35ms">í</span><span style="transition-delay:70ms">l</span><span style="transition-delay:105ms">i</span><span style="transition-delay:140ms">o</span><span style="transition-delay:175ms">s</span></span>
+            <span class="hero-categoria-palavra" data-inicio="0.70" data-fim="0.94"><span style="transition-delay:0ms">S</span><span style="transition-delay:35ms">o</span><span style="transition-delay:70ms">b</span><span style="transition-delay:105ms">r</span><span style="transition-delay:140ms">a</span><span style="transition-delay:175ms">n</span><span style="transition-delay:210ms">c</span><span style="transition-delay:245ms">e</span><span style="transition-delay:280ms">l</span><span style="transition-delay:315ms">h</span><span style="transition-delay:350ms">a</span><span style="transition-delay:385ms">s</span></span>
+        </div>
+
+        <div class="hero-scroll-indicador" id="heroScrollIndicador" aria-hidden="true">
+            <span>Role</span>
+            <span class="linha"></span>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    var secao = document.getElementById('hero');
+    var frameEl = document.getElementById('heroFrame');
+    var conteudo = document.getElementById('heroConteudo');
+    var indicador = document.getElementById('heroScrollIndicador');
+    var palavras = document.querySelectorAll('.hero-categoria-palavra');
+    if (!secao || !frameEl) return;
+
+    var TOTAL_QUADROS = 177;
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return; // fica só no primeiro quadro, sem animação presa ao scroll
+
+    function caminhoQuadro(indice) {
+        var numero = String(indice + 1).padStart(3, '0');
+        return 'assets/img/hero/frame-' + numero + '.jpg';
+    }
+
+    for (var i = 0; i < TOTAL_QUADROS; i++) {
+        var img = new Image();
+        img.src = caminhoQuadro(i);
+    }
+
+    var SUAVIZACAO = 0.08;
+    var progressoAlvo = 0;
+    var progressoAtual = 0;
+    var ultimoIndice = 0;
+
+    function calcularProgressoAlvo() {
+        var rect = secao.getBoundingClientRect();
+        var distanciaRolavel = rect.height - window.innerHeight;
+        if (distanciaRolavel <= 0) return 0;
+        return Math.min(Math.max(-rect.top / distanciaRolavel, 0), 1);
+    }
+
+    function faixaOpacidade(p, saidaIni, saidaFim) {
+        return 1 - Math.min(Math.max((p - saidaIni) / (saidaFim - saidaIni), 0), 1);
+    }
+
+    function renderizar(p) {
+        var indice = Math.round(p * (TOTAL_QUADROS - 1));
+        if (indice !== ultimoIndice) {
+            frameEl.src = caminhoQuadro(indice);
+            ultimoIndice = indice;
+        }
+        var opacidade = faixaOpacidade(p, 0.86, 0.98);
+        if (conteudo) {
+            conteudo.style.opacity = opacidade;
+            conteudo.style.transform = 'translateY(' + ((1 - opacidade) * -16) + 'px)';
+        }
+        if (indicador) indicador.style.opacity = Math.max(0, 0.8 - p * 6);
+
+        for (var w = 0; w < palavras.length; w++) {
+            var el = palavras[w];
+            var dentro = p >= parseFloat(el.dataset.inicio) && p <= parseFloat(el.dataset.fim);
+            el.classList.toggle('visivel', dentro);
+        }
+    }
+
+    function loop() {
+        progressoAlvo = calcularProgressoAlvo();
+        var diferenca = progressoAlvo - progressoAtual;
+        progressoAtual += Math.abs(diferenca) < 0.0005 ? diferenca : diferenca * SUAVIZACAO;
+        renderizar(progressoAtual);
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+})();
+</script>
+
+<section class="frase-impacto" id="fraseImpacto">
+    <p>Relpps: qualidade, cuidado e confiança em produtos pensados para o seu bem-estar.</p>
+</section>
+
+<script>
+(function () {
+    var alvo = document.getElementById('fraseImpacto');
+    if (!alvo || !('IntersectionObserver' in window)) { if (alvo) alvo.classList.add('visivel'); return; }
+    var observador = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (entrada) {
+            if (entrada.isIntersecting) {
+                alvo.classList.add('visivel');
+                observador.unobserve(alvo);
+            }
+        });
+    }, { threshold: 0.4 });
+    observador.observe(alvo);
+})();
+</script>
+
+<section class="pilares">
+    <div class="pilar">
+        <div class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="7"></circle><path d="M9 10l2 2 4-4"></path><path d="M9 16.5L7.5 21 12 18.5 16.5 21 15 16.5"></path></svg>
+        </div>
+        <strong>Produtos originais</strong>
+    </div>
+    <div class="pilar">
+        <div class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M20 20l-5-5"></path></svg>
+        </div>
+        <strong>Curadoria criteriosa</strong>
+    </div>
+    <div class="pilar">
+        <div class="icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4.5L21 8v9l-9 4.5L3 17V8z"></path><path d="M3 8l9 4.5L21 8"></path><path d="M12 12.5V21"></path></svg>
+        </div>
+        <strong>Estoque garantido</strong>
+    </div>
+</section>
+
+<section>
+    <h2>Promoção da semana</h2>
+    <div class="produto-grid">
+        <a class="produto-card" href="#">
+    <span class="selo-promocao">Promoção</span>
+    <img src="uploads/produtos/esmalte-gel-vermelho.jpg" alt="Esmalte em Gel Vermelho" loading="lazy">
+    <h3>Esmalte em Gel Vermelho</h3>
+    <p class="preco">R$ 29,90</p>
+</a>    </div>
+</section>
+
+<section>
+    <h2>Categorias</h2>
+    <div class="categorias-grid">
+                    <a class="categoria-card" href="#" style="background-image: url('assets/img/categorias/unhas.jpg')">
+                <h3>Unhas</h3>
+            </a>
+                    <a class="categoria-card" href="#" style="background-image: url('assets/img/categorias/cilios.jpg')">
+                <h3>Cílios</h3>
+            </a>
+                    <a class="categoria-card" href="#" style="background-image: url('assets/img/categorias/sobrancelhas.jpg')">
+                <h3>Sobrancelhas</h3>
+            </a>
+            </div>
+</section>
+
+<section>
+    <h2>Produtos recentes</h2>
+    <div class="produto-grid">
+        <a class="produto-card" href="#">
+    
+    <img src="uploads/produtos/alicate-de-sobrancelha.jpg" alt="Alicate de Sobrancelha" loading="lazy">
+    <h3>Alicate de Sobrancelha</h3>
+    <p class="preco">R$ 18,50</p>
+</a><a class="produto-card" href="#">
+    
+    <img src="uploads/produtos/cola-de-cilios-teste.jpg" alt="Cola para Cílios Profissional" loading="lazy">
+    <h3>Cola para Cílios Profissional</h3>
+    
+</a><a class="produto-card" href="#">
+    <span class="selo-promocao">Promoção</span>
+    <img src="uploads/produtos/esmalte-gel-vermelho.jpg" alt="Esmalte em Gel Vermelho" loading="lazy">
+    <h3>Esmalte em Gel Vermelho</h3>
+    <p class="preco">R$ 29,90</p>
+</a>    </div>
+</section>
+
+</main>
+<a class="whatsapp-flutuante" href="https://wa.me/5561996498557?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Relpps%20Cosm%C3%A9ticos." target="_blank" rel="noopener">
+    Fale no WhatsApp
+</a>
+<footer class="rodape">
+    <p>C 12 AE 2, Loja 30 – Taguatinga Centro, DF, 72010901</p>
+    <p>Seg a Sex, 09h00 às 18h00</p>
+    <p>
+        <a class="instagram-link instagram-link-rodape" href="https://www.instagram.com/relpps" target="_blank" rel="noopener" aria-label="Instagram da Relpps">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg>
+        </a>
+    </p>
+    <p>&copy; 2026 Relpps Cosméticos</p>
+</footer>
+<script>
+(function () {
+    // Revelação progressiva ao rolar — cada filho direto de <main> (exceto
+    // o hero, que já tem sua própria animação presa ao scroll) recebe um
+    // fade + leve deslocamento ao entrar na tela, com pequeno escalonamento
+    // entre os elementos.
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var alvos = document.querySelectorAll('main > *:not(script):not(.hero-scrolly)');
+
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+        alvos.forEach(function (el) { el.classList.add('visivel'); });
+        return;
+    }
+
+    var observador = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (entrada) {
+            if (entrada.isIntersecting) {
+                entrada.target.classList.add('visivel');
+                observador.unobserve(entrada.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    alvos.forEach(function (el, indice) {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (indice % 4) * 60 + 'ms';
+        observador.observe(el);
+    });
+})();
+</script>
+</body>
+</html>
