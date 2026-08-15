@@ -54,13 +54,14 @@
 
 <section class="hero-scrolly" id="hero">
     <div class="hero-scrolly-stage" id="heroStage">
-        <img class="hero-scrolly-frame" id="heroFrame" src="assets/img/hero/frame-001.jpg" alt="Cuidado profissional com beleza — Relpps Cosméticos">
+        <img class="hero-scrolly-frame" id="heroFrame" src="assets/img/hero-mobile/frame-001.jpg" alt="Cuidado profissional com beleza — Relpps Cosméticos">
         <div class="hero-scrolly-overlay" aria-hidden="true"></div>
 
         <div class="hero-scrolly-conteudo" id="heroConteudo">
             <span class="eyebrow">Relpps Cosméticos</span>
             <h1>Onde beleza encontra cuidado.</h1>
-            <p>Insumos com procedência garantida para unhas, cílios e sobrancelhas.</p>
+            <p class="hero-subtitulo">Insumos com procedência garantida para unhas, cílios e sobrancelhas.</p>
+            <p class="hero-frase-substituta" data-inicio="0.05" data-fim="0.85">Relpps: qualidade, cuidado e confiança em produtos pensados para o seu bem-estar.</p>
             <div class="botoes">
                 <a class="botao" href="#">Ver catálogo</a>
                 <a class="botao-secundario" href="https://wa.me/5561996498557?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Relpps%20Cosm%C3%A9ticos." target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -86,21 +87,34 @@
     var frameEl = document.getElementById('heroFrame');
     var conteudo = document.getElementById('heroConteudo');
     var indicador = document.getElementById('heroScrollIndicador');
-    var palavras = document.querySelectorAll('.hero-categoria-palavra');
+    var palavras = document.querySelectorAll('.hero-categoria-palavra, .hero-frase-substituta');
     if (!secao || !frameEl) return;
 
     var TOTAL_QUADROS = 177;
     var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return; // fica só no primeiro quadro, sem animação presa ao scroll
 
+    // No mobile usamos uma pasta de quadros bem mais leve (640x360, ~26KB
+    // cada) em vez da versão de desktop (1280x720, ~100KB) — baixar e
+    // decodificar 177 imagens pesadas era o que travava o scroll no celular.
+    var MOBILE = window.matchMedia('(max-width: 720px)').matches;
+    var PASTA_QUADROS = MOBILE ? 'assets/img/hero-mobile/' : 'assets/img/hero/';
+
     function caminhoQuadro(indice) {
         var numero = String(indice + 1).padStart(3, '0');
-        return 'assets/img/hero/frame-' + numero + '.jpg';
+        return PASTA_QUADROS + 'frame-' + numero + '.jpg';
     }
 
+    frameEl.src = caminhoQuadro(0);
+
+    var quadrosCarregados = [];
     for (var i = 0; i < TOTAL_QUADROS; i++) {
         var img = new Image();
         img.src = caminhoQuadro(i);
+        if (img.decode) {
+            img.decode().catch(function () {});
+        }
+        quadrosCarregados.push(img);
     }
 
     var SUAVIZACAO = 0.08;
